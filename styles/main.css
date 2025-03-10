@@ -1,0 +1,42 @@
+#board {
+  background-image: url('/assets/big_backgammon_enhanced_35pct.png');
+  width: 680px;
+  /* adjust to fit board image */
+  height: 504px;
+  position: relative;
+  margin-left: 30px;
+  margin-top: 40px;
+}
+
+.piece {
+  /* Prevents text selection */
+  user-select: none;
+  /* Shows a grab cursor on hover */
+  cursor: grab;
+
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  position: absolute;
+  cursor: pointer;
+  left: 0px;
+  top: 0px;
+  box-shadow: 0 0 0 1px #888;
+}
+
+.piece-number-overlay {
+  position: absolute;
+  width: 36px; /* Match the piece size */
+  height: 36px;
+  line-height: 36px; /* Centers the number vertically */
+  text-align: center; /* Centers the number horizontally */
+  font-size: 16px; /* Adjust font size as needed */
+  color: grey; /* Number color */
+  pointer-events: none; /* Allows clicks to pass through to the piece */
+  background: transparent; /* Transparent background */
+}
+
+.piece:active {
+  cursor: grabbing;
+  /* Shows a grabbing cursor when dragging */
+}
