@@ -256,7 +256,7 @@ function dispatchMessage(message) {
           message.params +
           ' data to function that performs move playback'
       );
-      // e.g. playbackMove(message.params);
+      playbackMove(message.params);
       break;
     case 'diceRoll':
       console.log(
@@ -264,7 +264,7 @@ function dispatchMessage(message) {
           message.params +
           ' data to function that performs diceRoll playback'
       );
-      // e.g. playbackDiceRoll(message.params);
+      playbackDiceRoll(message.params);
       break;
     case 'challenge':
       console.log(
