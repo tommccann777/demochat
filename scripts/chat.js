@@ -192,7 +192,6 @@ async function fetchRecentPlayers() {
 }
 
 async function connectToPlayer(remoteKey) {
-
   console.log('Attempting to connect to ' + remoteKey);
 
   const playerRef = database.ref('players').child(remoteKey);
@@ -206,7 +205,7 @@ async function connectToPlayer(remoteKey) {
     }
 
     const remotePeerId = snapshot.val().peerID;
-    console.log('Attempting to connect to peer id ' + remotePeerId)
+    console.log('Attempting to connect to peer id ' + remotePeerId);
 
     const conn = peer.connect(remotePeerId);
 
@@ -222,12 +221,67 @@ async function connectToPlayer(remoteKey) {
 
     conn.on('data', (data) => {
       console.log('Received data:', data);
+
+      parsedData = JSON.parse(data);
+
+      console.log(
+        'Data received. method=' +
+          parsedData.method +
+          ', params=' +
+          JSON.stringify(parsedData.params)
+      );
+      dispatchMessage(parsedData);
     });
 
     return conn;
   } catch (err) {
     console.error('Error fetching player data:', err);
     return null;
+  }
+}
+
+function dispatchMessage(message) {
+  switch (message.method) {
+    case 'chat':
+      console.log(
+        'Send ' +
+          message.params +
+          ' data to function that consumes chat messages'
+      );
+      // e.g. displayChat(message.params);
+      break;
+    case 'move':
+      console.log(
+        'Send ' +
+          message.params +
+          ' data to function that performs move playback'
+      );
+      // e.g. playbackMove(message.params);
+      break;
+    case 'diceRoll':
+      console.log(
+        'Send ' +
+          message.params +
+          ' data to function that performs diceRoll playback'
+      );
+      // e.g. playbackDiceRoll(message.params);
+      break;
+    case 'challenge':
+      console.log(
+        'Send ' +
+          message.params +
+          ' data to function that handles challenge workflow'
+      );
+      // e.g. handleChallenge(message.params);
+      break;
+    case 'forfeit':
+      console.log(
+        'Send ' +
+          message.params +
+          ' data to function that handles forfeit workflow'
+      );
+      // e.g. handleForfeit(message.params);
+      break;
   }
 }
 
@@ -266,7 +320,7 @@ function demoRegisterForChat() {
     skillLevel: 'beginner',
   };
 
-  console.log('Demo register of ' + player)
+  console.log('Demo register of ' + player);
 
   registerForChat(null, player);
 }
